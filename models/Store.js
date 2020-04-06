@@ -51,27 +51,4 @@ storeSchema.pre('save', async function(next) {
   next();
 });
 
-// storeSchema.pre('findOneAndUpdate', async function(next) {
-
-//   // Find and compare original details to new ones.
-//   const store = await this.findOne({});
-//   if(!this._update.name || store.name === this._update.name) {
-//     return next();
-//   }
-
-//   // See if any stores with slug already exist.
-//   let   storeSlug = slug(this._update.name);
-//   const slugRegEx = new RegExp(`^(${storeSlug})((-[0-9]*$)?)$`, 'i');
-//   const storesWithSlug = await Store.find({slug: slugRegEx});
-
-//   // Set slug with incremement if store exists.
-//   if(storesWithSlug.length) storeSlug = `${storeSlug}-${storesWithSlug.length + 1}`;
-
-//   // Update store with new slug.
-//   const newSlug = promisify(this.update({}, { slug: storeSlug }), this);
-//   await newSlug;
-//   next();
-
-// });
-
 module.exports = mongoose.model('Store', storeSchema);
