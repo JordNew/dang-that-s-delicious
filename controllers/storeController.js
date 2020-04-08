@@ -89,8 +89,9 @@ exports.getStoreBySlug = async (req, res, next) => {
 
 exports.getStoresByTag = async (req, res) => {
   const tag = req.params.tag;
+  const tagQuery = tag || { $exists: true }; // show either the stores with the currently selected tag, or the stores with at least one tag of any kind
   const tagsPromise = Store.getTagsList();
-  const storesPromise = Store.find({ tags: tag});
+  const storesPromise = Store.find({ tags: tagQuery });
   const [tags, stores] = await Promise.all([tagsPromise, storesPromise]);
   res.render('tag', { tags, title: 'Tags', tag, stores });
 };
