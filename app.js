@@ -55,7 +55,7 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.flashes = req.flash();
-  res.locals.user = req.user || null;
+  res.locals.user = req.user || null; // passes user to locals if req.user is made available by passport, otherwise passes "null"
   res.locals.currentPath = req.path;
   next();
 });

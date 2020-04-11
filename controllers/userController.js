@@ -38,3 +38,7 @@ exports.register = async (req, res, next) => {
   await register(user, req.body.password); // does not actually store password to database, but a hash of it
   next(); // pass to authController.login
 };
+
+exports.account = (req, res) => {
+  res.render('account', { title: 'Edit your account' });
+};
