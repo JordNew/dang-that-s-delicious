@@ -36,6 +36,5 @@ exports.register = async (req, res, next) => {
   const user = new User({ email: req.body.email, name: req.body.name});
   const register = promisify(User.register, User); // if the method to promisify (here: User.register) lives on an object, you also have to pass the entire object (here: User)
   await register(user, req.body.password); // does not actually store password to database, but a hash of it
-  res.send('it works!!');
   next(); // pass to authController.login
 };
