@@ -52,5 +52,6 @@ router.get('/logout', authController.logout);
 router.get('/account', authController.isLoggedIn, userController.account); // make sure user is logged in before redirecting to account URL
 router.post('/account', catchErrors(userController.updateAccount));
 router.post('/account/forgot', catchErrors(authController.forgot));
+router.get('/account/reset/:token', catchErrors(authController.reset));
 
 module.exports = router;
