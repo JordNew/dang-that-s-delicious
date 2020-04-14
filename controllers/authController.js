@@ -2,6 +2,7 @@ const passport = require('passport');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const User = mongoose.model('User'); // make the reference to the appropriate model
+const promisify = require('es6-promisify');
 
 exports.login = passport.authenticate('local', {
   failureRedirect: '/login',
@@ -55,4 +56,39 @@ exports.reset = async (req, res) => {
   };
   // if there is a user, show the reset password form
   res.render('reset', { title: 'Reset your password' });
+};
+
+exports.confirmedPasswords = (req, res, next) => {
+  if(req.body.password === req.body['password-confirm']) {
+    next(); // keep it going
+    return;
+  }
+  req.flash('error', 'Passwords do not match!');
+  res.redirect('back');
+};
+
+exports.update = async (req, res) => {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,     // check if token is equal to the token that the user knows (from email) and submits
+    resetPasswordExpires: { $gt: Date.now() } // check if 'Expires' is greater than (gt) now, aka in the future (if so: valid, otherwise: expired)
+  });
+
+  if (!user) { 
+    req.flash('error', 'Password reset is invalid or has expired');
+    return res.redirect('/login');
+  };
+
+  // setPassword() (method from the passportLocalMongoose plugin in User.js) is not promisified by default
+  // >> workaround: 1) import promisify at the top of this file, 2) promisify 'manually' as follows:
+  const setPassword = promisify(user.setPassword, user); // promisify user.setPassword, binding it to user
+  
+  // handle the pw reset DB side:
+  await setPassword(req.body.password); // sets the new pw, hashes and salts it 
+  user.resetPasswordToken = undefined; // get rid of this field in MongoDB by setting it to undefined;
+  user.resetPasswordExpires = undefined; // " " " " " " " " " " " " " " " " " " " " " " " " " " " " 
+  const updatedUser = await user.save(); // actually saves the above steps
+  await req.login(updatedUser); // auto login the user
+  req.flash('success', 'Nice! Your password has been reset! You are now logged in!');
+  res.redirect('/');
+
 };

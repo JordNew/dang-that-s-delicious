@@ -53,5 +53,8 @@ router.get('/account', authController.isLoggedIn, userController.account); // ma
 router.post('/account', catchErrors(userController.updateAccount));
 router.post('/account/forgot', catchErrors(authController.forgot));
 router.get('/account/reset/:token', catchErrors(authController.reset));
+router.post('/account/reset/:token', 
+  authController.confirmedPasswords,  // check if the provided passwords match
+  catchErrors(authController.update)) // go ahead and actually update the password
 
 module.exports = router;
