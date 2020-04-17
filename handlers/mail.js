@@ -21,12 +21,13 @@ const generateHTML = (filename, options = {}) => {
 
 exports.send = async (options) => {
   const html = generateHTML(options.filename, options);
+  const text = htmlToText.fromString(html);
   const mailOptions = {
     from: `Jord New <jrobertn@gmail.com>`,
     to: options.user.email,
     subject: options.subject,
     html,
-    text: 'This will also be filled in later'
+    text
   };
   const sendMail = promisify(transport.sendMail, transport);
   return sendMail(mailOptions);
