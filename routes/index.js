@@ -57,4 +57,10 @@ router.post('/account/reset/:token',
   authController.confirmedPasswords,  // check if the provided passwords match
   catchErrors(authController.update)) // go ahead and actually update the password
 
+/*
+  API
+*/
+
+router.get('/api/search', catchErrors(storeController.searchStores));
+
 module.exports = router;
