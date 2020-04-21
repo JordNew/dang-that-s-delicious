@@ -60,11 +60,17 @@ const stores = await Store.find();
 	res.render('stores', {title: 'Stores', stores });
 }
 
+const confirmOwner = (store, user) => {
+  if (!store.author.equals(user._id)) {   // Use the .equals method to compare ObjectId data type with String data type
+    throw Error('You must own a store in order to edit it!');
+  }
+};
+
 exports.editStore = async (req, res) => {
 	// 1. Find the store given the ID
 	const store = await Store.findOne({ _id: req.params.id })
 	// 2. Confirm they are the owner of the store
-	// TODO
+	confirmOwner(store, req.user); 
 	// 3. Render out the edit form so the user can update their store
 	res.render('editStore', { title: `Edit ${store.name}`, store });
 }
