@@ -1,5 +1,15 @@
 const axios = require('axios');
 
+function searchResultsHTML(stores) {
+  return stores.map(store => {
+    return `
+      <a href="/stores/${store.slug}" class="search__result">
+        <strong>${store.name}</strong>
+      </a>
+    `;
+  }).join('');
+}
+
 function typeAhead(search) {
   if (!search) return;
 
@@ -15,13 +25,20 @@ function typeAhead(search) {
 
     // show the search results
     searchResults.style.display = 'block';
+    // if there is nothing to show, blow it away
+    searchResults.innerHTML = '';
 
     axios
       .get(`/api/search?q=${this.value}`)
       .then(res => {
         if (res.data.length) {
-          console.log('There is something to show!');
+       // console.log('There is something to show!');
+          searchResults.innerHTML = searchResultsHTML(res.data); // effectively the same as: const html = searchResultsHTML(res.data);
+                                                                                          // searchResults.innerHTML = html;
         }
+      })
+      .catch(err => {
+        console.error(err);
       });
   });
 };
