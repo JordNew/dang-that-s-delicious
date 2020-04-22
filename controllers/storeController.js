@@ -114,9 +114,9 @@ exports.searchStores = async (req, res) => {
     score: { $meta: 'textScore' }
   })
   // then sort them
-  .sort({                         // sort based on the new meta property, which is: score,
+  .sort({                         // sort based on the DB meta property, which is: score,
     score: { $meta: 'textScore' } // the value of which is $meta : 'textScore'
-  })                              // higher value = higher display (because: more hits after the query)
+  })                              // higher value = higher display (because: more hits per query)
   // limit to only five results
   .limit(5);
   res.json(stores);
