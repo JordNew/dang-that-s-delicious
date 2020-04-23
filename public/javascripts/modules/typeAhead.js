@@ -41,6 +41,14 @@ function typeAhead(search) {
         console.error(err);
       });
   });
+    // handle keyboard inputs
+  searchInput.on('keyup', (e) => {
+    // if they aren't pressing up, down or enter, who cares!
+    if (![38, 40, 13].includes(e.keyCode)) {
+      return;
+    }
+    // console.log('Do something!');
+  })
 };
 
 export default typeAhead;
