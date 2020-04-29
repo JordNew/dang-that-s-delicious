@@ -998,6 +998,8 @@ function typeAhead(search) {
   var searchResults = search.querySelector('.search__results');
 
   searchInput.on('input', function () {
+    var _this = this;
+
     // .on is a bling.js shortcut for .addEventListener
     // if there is no value, quit it
     if (!this.value) {
@@ -1008,14 +1010,15 @@ function typeAhead(search) {
     // show the search results
     searchResults.style.display = 'block';
     // if there is nothing to show, blow it away
-    searchResults.innerHTML = '';
 
     _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
       if (res.data.length) {
         // console.log('There is something to show!');
         searchResults.innerHTML = searchResultsHTML(res.data); // effectively the same as: const html = searchResultsHTML(res.data);
-        // searchResults.innerHTML = html;
+        return; // searchResults.innerHTML = html;
       }
+      // tell user nothing came back (literally: res came back with a length of 0)
+      searchResults.innerHTML = '<div class="search__result">No results for ' + _this.value + ' found!</div>';
     }).catch(function (err) {
       console.error(err);
     });
