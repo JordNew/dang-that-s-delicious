@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 function searchResultsHTML(stores) {
   return stores.map(store => {
@@ -60,10 +60,7 @@ function typeAhead(search) {
       next = current.previousElementSibling || items[items.length - 1];
     } else if (e.keyCode === 38) {
       next = items[items.length - 1];
-    } else if (e.keyCode === 13 && current.href) { // if pressing enter AND there is a highlighted search result that contains a hyperlink
-      console.log('Changing Pages!');
-      console.log(current);
-      
+    } else if (e.keyCode === 13 && current.href) { // if pressing enter AND there is a highlighted search result that contains a hyperlink      
       window.location = current.href; // go to hyperlink
       return; // 
     }

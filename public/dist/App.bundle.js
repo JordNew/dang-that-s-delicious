@@ -978,7 +978,12 @@ exports.$$ = $$;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var axios = __webpack_require__(13);
+
+var _axios = __webpack_require__(13);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function searchResultsHTML(stores) {
   return stores.map(function (store) {
@@ -1005,7 +1010,7 @@ function typeAhead(search) {
     // if there is nothing to show, blow it away
     searchResults.innerHTML = '';
 
-    axios.get('/api/search?q=' + this.value).then(function (res) {
+    _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
       if (res.data.length) {
         // console.log('There is something to show!');
         searchResults.innerHTML = searchResultsHTML(res.data); // effectively the same as: const html = searchResultsHTML(res.data);
@@ -1037,10 +1042,7 @@ function typeAhead(search) {
     } else if (e.keyCode === 38) {
       next = items[items.length - 1];
     } else if (e.keyCode === 13 && current.href) {
-      // if pressing enter AND there is a highlighted search result that contains a hyperlink
-      console.log('Changing Pages!');
-      console.log(current);
-
+      // if pressing enter AND there is a highlighted search result that contains a hyperlink      
       window.location = current.href; // go to hyperlink
       return; // 
     }
