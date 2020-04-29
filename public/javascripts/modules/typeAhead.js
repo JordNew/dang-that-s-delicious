@@ -47,8 +47,33 @@ function typeAhead(search) {
     if (![38, 40, 13].includes(e.keyCode)) {
       return;
     }
-    // console.log('Do something!');
-  })
+    const activeClass = 'search__result--active';
+    const current = search.querySelector(`.${activeClass}`); // class of currently highlighted search result
+    const items = search.querySelectorAll('.search__result'); // gives back a node list of ALL search results
+    let next; // determines the next search result, when user presses up or down (hence: let, not const, to update variable value)
+    
+    if (e.keyCode === 40 && current) { // if pressing up AND there is a currently highlighted search result
+      next = current.nextElementSibling || items[0]; 
+    } else if (e.keyCode === 40) {
+      next = items[0];
+    } else if (e.keyCode === 38 && current) { // if pressing down AND there is a currently highlighted search result
+      next = current.previousElementSibling || items[items.length - 1];
+    } else if (e.keyCode === 38) {
+      next = items[items.length - 1];
+    } else if (e.keyCode === 13 && current.href) { // if pressing enter AND there is a highlighted search result that contains a hyperlink
+      console.log('Changing Pages!');
+      console.log(current);
+      
+      window.location = current.href; // go to hyperlink
+      return; // 
+    }
+
+    console.log(next);
+    if (current) {   // if any search result currently has the activeClass, remove it when arrowing up/down,
+      current.classList.remove(activeClass); // otherwise multiple results are 'active', which makes no sense
+    } 
+    next.classList.add(activeClass);  // add activeClass to next
+  });
 };
 
-export default typeAhead;
+export default typeAhead; 
