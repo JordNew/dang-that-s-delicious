@@ -1,4 +1,5 @@
 import axios from 'axios';
+import dompurify from 'dompurify';
 
 function searchResultsHTML(stores) {
   return stores.map(store => {
@@ -32,11 +33,11 @@ function typeAhead(search) {
       .then(res => {
         if (res.data.length) {
        // console.log('There is something to show!');
-          searchResults.innerHTML = searchResultsHTML(res.data); // effectively the same as: const html = searchResultsHTML(res.data);
+          searchResults.innerHTML = dompurify.sanitize(searchResultsHTML(res.data)); // effectively the same as: const html = searchResultsHTML(res.data);
           return;                                                                         // searchResults.innerHTML = html;
         }
         // tell user nothing came back (literally: res came back with a length of 0)
-        searchResults.innerHTML = `<div class="search__result">No results for ${this.value} found!</div>`;
+        searchResults.innerHTML = dompurify.sanitize(`<div class="search__result">No results for ${this.value} found!</div>`);
       })
       .catch(err => {
         console.error(err);
