@@ -57,6 +57,8 @@ router.post('/account/reset/:token',
   authController.confirmedPasswords,  // check if the provided passwords match
   catchErrors(authController.update)) // go ahead and actually update the password
 
+router.get('/map', storeController.mapPage);
+
 /*
   API
 */
