@@ -3416,6 +3416,10 @@ function makeMap(mapDiv) {
 
   var input = (0, _bling.$)('[name="geolocate"]');
   var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.addListener('place_changed', function () {
+    var place = autocomplete.getPlace();
+    loadPlaces(map, place.geometry.location.lat(), place.geometry.location.lng());
+  });
 }
 
 exports.default = makeMap;
