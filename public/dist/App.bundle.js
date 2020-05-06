@@ -3379,6 +3379,7 @@ function loadPlaces(map) {
     }
     // create a bounds
     var bounds = new google.maps.LatLngBounds();
+    var infoWindow = new google.maps.InfoWindow();
 
     var markers = places.map(function (place) {
       var _place$location$coord = _slicedToArray(place.location.coordinates, 2),
@@ -3390,6 +3391,15 @@ function loadPlaces(map) {
       var marker = new google.maps.Marker({ map: map, position: position });
       marker.place = place;
       return marker;
+    });
+
+    // when someone clicks on a marker, show the details of that place
+    markers.forEach(function (marker) {
+      return marker.addListener('click', function () {
+        var html = '\n          <div class="popup">\n            <a href="/store/' + this.place.slug + '">\n              <img src="/uploads/' + (this.place.photo || 'store.png') + '" alt="' + this.place.name + '" />\n              <p>' + this.place.name + ' - ' + this.place.location.address + '</p>\n            </a>\n          </div>\n        ';
+        infoWindow.setContent(html);
+        infoWindow.open(map, this);
+      });
     });
 
     // then zoom the map to fit all the markers perfectly
