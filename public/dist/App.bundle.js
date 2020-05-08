@@ -3460,6 +3460,12 @@ function ajaxHeart(e) {
   _axios2.default.post(this.action).then(function (res) {
     var isHearted = _this.heart.classList.toggle('heart__button--hearted'); // this.heart = _storeCard.pug > heart form tag (name="heart")
     (0, _bling.$)('.heart-count').textContent = res.data.hearts.length; // heart counter value === amount of hearts in user hearts array
+    if (isHearted) {
+      _this.heart.classList.add('heart__button--float'); // add floating little heart when heart is clicked
+      setTimeout(function () {
+        return _this.heart.classList.remove('heart__button--float');
+      }, 2500); // remove floating heart after 2,5 sec
+    }
   }).catch(console.error);
 }
 

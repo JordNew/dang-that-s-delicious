@@ -11,6 +11,10 @@ function ajaxHeart (e) {
    .then(res => {
     const isHearted = this.heart.classList.toggle('heart__button--hearted'); // this.heart = _storeCard.pug > heart form tag (name="heart")
     $('.heart-count').textContent = res.data.hearts.length; // heart counter value === amount of hearts in user hearts array
+    if (isHearted) {
+      this.heart.classList.add('heart__button--float'); // add floating little heart when heart is clicked
+      setTimeout(() => this.heart.classList.remove('heart__button--float'), 2500); // remove floating heart after 2,5 sec
+    }
    })
    .catch(console.error);
 
