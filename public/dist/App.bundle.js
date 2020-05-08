@@ -3415,6 +3415,10 @@ var _map = __webpack_require__(12);
 
 var _map2 = _interopRequireDefault(_map);
 
+var _heart = __webpack_require__(35);
+
+var _heart2 = _interopRequireDefault(_heart);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng'));
@@ -3422,6 +3426,44 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _typeAhead2.default)((0, _bling.$)('.search'));
 
 (0, _map2.default)((0, _bling.$)('#map'));
+
+var heartForms = (0, _bling.$$)('form.heart');
+heartForms.on('submit', _heart2.default);
+
+/***/ }),
+/* 34 */,
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = __webpack_require__(2);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _bling = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ajaxHeart(e) {
+  var _this = this;
+
+  e.preventDefault(); // stop default, which is POST
+  // instead of having the browser to post data, post data with the following JavaScript:
+  console.log('HEART ITTT!!!');
+  console.log(this); // this = the heart form tag (being the thing this function is called against)
+  _axios2.default.post(this.action).then(function (res) {
+    var isHearted = _this.heart.classList.toggle('heart__button--hearted'); // this.heart = _storeCard.pug > heart form tag (name="heart")
+    (0, _bling.$)('.heart-count').textContent = res.data.hearts.length; // heart counter value === amount of hearts in user hearts array
+  }).catch(console.error);
+}
+
+exports.default = ajaxHeart;
 
 /***/ })
 /******/ ]);
