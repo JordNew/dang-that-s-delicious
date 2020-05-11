@@ -58,7 +58,7 @@ router.post('/account/reset/:token',
   catchErrors(authController.update)) // go ahead and actually update the password
 
 router.get('/map', storeController.mapPage);
-router.get('/hearts', catchErrors(storeController.getHearts));
+router.get('/hearts', authController.isLoggedIn, catchErrors(storeController.getHearts));
 
 /*
   API
