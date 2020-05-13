@@ -1,0 +1,7 @@
+Dang that's Delicious TO DO, additionally:
+
+- make geolocation dynamic
+
+- look at flash messages: not always working properly
+>> case: Review model
+e.g. when you submit a review without writing any text, no flash messages appears > the page just hangs
