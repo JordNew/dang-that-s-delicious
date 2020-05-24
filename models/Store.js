@@ -84,9 +84,11 @@ storeSchema.statics.getTopStores = function() {
     // Add the average reviews field
     { $addFields: {
       averageRating: { $avg: '$reviews.rating' }
-    }}
+    }},
     // Sort it by our new field, highest reviews first
+    { $sort: { averageRating: -1 } },
     // Limit to at most 10
+    { $limit: 10 }
   ]);
 }
 
