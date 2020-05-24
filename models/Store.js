@@ -85,6 +85,14 @@ storeSchema.statics.getTopStores = function() {
     { $addFields: {
       averageRating: { $avg: '$reviews.rating' }
     }},
+    // ask for the slug (the old way with $project)
+    // { $project: {
+    //   photo: '$$ROOT.photo',
+    //   name: '$$ROOT.name',
+    //   reviews: '$$ROOT.reviews',
+    //   slug: '$$ROOT.slug',
+    //   averageRating: { $avg: '$reviews.rating' }
+    // }},
     // Sort it by our new field, highest reviews first
     { $sort: { averageRating: -1 } },
     // Limit to at most 10
