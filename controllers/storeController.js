@@ -72,7 +72,7 @@ exports.getStores = async (req, res) => {
 
   const pages = Math.ceil(count / limit);
 
-	res.render('stores', {title: 'Stores', stores });
+	res.render('stores', {title: 'Stores', stores, page, pages, count });
 }
 
 const confirmOwner = (store, user) => {
