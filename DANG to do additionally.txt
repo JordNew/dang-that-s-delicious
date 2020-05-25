@@ -8,3 +8,5 @@ e.g. when you submit a review without writing any text, no flash messages appear
 !! check indentation on Store.js (did anything get moved accidentally?)
 
 - add regex to search function in case someone makes a typo / spells something differently
+
+- put pagination interface parts (Prev, text, Next etc.) on one line (instead of above each other)
