@@ -6,3 +6,5 @@ Dang that's Delicious TO DO, additionally:
 >> case: Review model
 e.g. when you submit a review without writing any text, no flash messages appears > the page just hangs
 !! check indentation on Store.js (did anything get moved accidentally?)
+
+- add regex to search function in case someone makes a typo / spells something differently
