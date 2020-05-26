@@ -66,7 +66,7 @@ exports.getStores = async (req, res) => {
     .skip(skip)
     .limit(limit)
     .sort({created: 'desc'});
-    
+
   const countPromise = Store.count();
 
   const [stores, count] = await Promise.all([storesPromise, countPromise]);
