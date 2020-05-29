@@ -47,7 +47,7 @@ exports.forgot = async (req, res) => {
     resetURL,                   // resetURL: resetURL
     filename: 'password-reset'  // when rendering out the HTML, this will look for password-reset.pug
   });
-  req.flash('success', `You have been emailed a password reset link.`); // DO NOT USE LIVE - TEST LINE - NOT SECURE ! ! !
+  req.flash('success', `You have been emailed a password reset link. Be sure to check your Spam/Junk folder!`); // DO NOT USE LIVE - TEST LINE - NOT SECURE ! ! !
   //4. redirect to login page
   res.redirect('/login');
 };
